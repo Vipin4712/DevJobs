@@ -47,9 +47,14 @@ function Navbar() {
           )}
 
           {isAuthenticated && user.role === 'seeker' && (
-            <Link to="/applications" className="text-sm text-gray-600 hover:text-gray-900">
-              My Applications
-            </Link>
+            <>
+              <Link to="/profile" className="text-sm text-gray-600 hover:text-gray-900">
+                Profile
+              </Link>
+              <Link to="/applications" className="text-sm text-gray-600 hover:text-gray-900">
+                My Applications
+              </Link>
+            </>
           )}
 
           {isAuthenticated && user.role === 'admin' && (

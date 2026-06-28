@@ -4,6 +4,7 @@ import { fetchJobs } from '../api/jobApi.js'
 import { setJobs, setLoading, setFilters } from '../store/jobSlice.js'
 import JobCard from '../components/JobCard.jsx'
 import FilterSidebar from '../components/FilterSidebar.jsx'
+import RecommendedJobs from '../components/RecommendedJobs.jsx'
 
 function BrowseJobs() {
   const dispatch = useDispatch()
@@ -36,6 +37,7 @@ function BrowseJobs() {
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-8">
+      <RecommendedJobs />
       <h1 className="text-2xl font-semibold text-gray-900 mb-1">Browse jobs</h1>
       <p className="text-sm text-gray-500 mb-6">{total} jobs found</p>
 

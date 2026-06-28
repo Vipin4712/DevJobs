@@ -5,6 +5,8 @@ import authRoutes from './routes/auth.routes.js'
 import jobRoutes from './routes/job.routes.js'
 import applicationRoutes from './routes/application.routes.js'
 import resumeRoutes from './routes/resume.routes.js'
+import matchRoutes from './routes/match.routes.js'
+import adminRoutes from './routes/admin.routes.js'
 import multer from 'multer'
 
 const app = express()
@@ -20,6 +22,8 @@ app.use('/api/auth', authRoutes)
 app.use('/api/jobs', jobRoutes)
 app.use('/api/applications', applicationRoutes)
 app.use('/api/resume', resumeRoutes)
+app.use('/api/match', matchRoutes)
+app.use('/api/admin', adminRoutes)
 
 app.get('/', (req, res) => {
   res.json({ message: 'API is running' })

@@ -11,6 +11,9 @@ import PostJob from './pages/PostJob.jsx'
 import RecruiterDashboard from './pages/RecruiterDashboard.jsx'
 import MyApplications from './pages/MyApplications.jsx'
 import JobApplicants from './pages/JobApplicants.jsx'
+import SeekerProfile from './pages/SeekerProfile.jsx'
+import MatchScore from './pages/MatchScore.jsx'
+import AdminPanel from './pages/AdminPanel.jsx'
 
 function App() {
   const { checking } = useAuth()
@@ -55,6 +58,23 @@ function App() {
         <Route path="/recruiter/job/:jobId/applicants" element={
           <ProtectedRoute allowedRoles={['recruiter']}>
             <JobApplicants />
+          </ProtectedRoute>
+        } />
+        <Route path="/profile" element={
+          <ProtectedRoute allowedRoles={['seeker']}>
+            <SeekerProfile />
+          </ProtectedRoute>
+        } />
+
+        <Route path="/jobs/:id/match" element={
+          <ProtectedRoute allowedRoles={['seeker']}>
+            <MatchScore />
+          </ProtectedRoute>
+        } />
+
+        <Route path="/admin" element={
+          <ProtectedRoute allowedRoles={['admin']}>
+            <AdminPanel />
           </ProtectedRoute>
         } />
       </Routes>
