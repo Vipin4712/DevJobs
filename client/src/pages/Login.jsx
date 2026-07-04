@@ -20,7 +20,7 @@ function Login() {
 
     try {
       const res = await loginUser(formData)
-      dispatch(loginSuccess(res.data.user))
+      dispatch(loginSuccess({ user: res.data.user, token: res.data.token }))
       toast.success('Welcome back!')
 
       if (res.data.user.role === 'recruiter') {

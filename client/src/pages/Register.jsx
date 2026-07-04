@@ -26,7 +26,7 @@ function Register() {
 
     try {
       const res = await registerUser(formData)
-      dispatch(loginSuccess(res.data.user))
+      dispatch(loginSuccess({ user: res.data.user, token: res.data.token }))
       toast.success('Registered successfully!')
 
       // redirect based on role
