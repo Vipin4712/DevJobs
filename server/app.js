@@ -38,7 +38,7 @@ app.use(cors({
 }))
 
 // handle preflight OPTIONS requests explicitly
-app.options('*', cors())
+app.options('(.*)', cors())
 
 app.use(express.json())          
 app.use(cookieParser())  
