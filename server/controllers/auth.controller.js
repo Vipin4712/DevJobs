@@ -1,6 +1,6 @@
 import bcrypt from 'bcryptjs'
 import User from '../models/user.model.js'
-import { generateToken, sendTokenAsCookie } from '../utils/jwt.js'
+import { generateToken } from '../utils/jwt.js'
 
 
 export const register = async (req, res) => {
