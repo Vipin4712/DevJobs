@@ -37,9 +37,6 @@ app.use(cors({
   allowedHeaders: ['Content-Type', 'Authorization'],
 }))
 
-// handle preflight OPTIONS requests explicitly
-app.options('(.*)', cors())
-
 app.use(express.json())          
 app.use(cookieParser())  
 
