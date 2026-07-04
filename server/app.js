@@ -10,21 +10,36 @@ import adminRoutes from './routes/admin.routes.js'
 import multer from 'multer'
 
 const app = express()
+
 const allowedOrigins = [
   'http://localhost:5173',
+  'http://localhost:3000',
+  'https://dev-jobs-tau-seven.vercel.app', // hardcode your actual Vercel URL here too
   process.env.CLIENT_URL,
-]
+].filter(Boolean) // removes undefined/null entries so they don't silently match
+
+console.log('Allowed origins:', allowedOrigins) // helpful for debugging on Render logs
 
 app.use(cors({
   origin: (origin, callback) => {
-    if (!origin || allowedOrigins.includes(origin)) {
+    // allow requests with no origin (Postman, mobile apps, server-to-server)
+    if (!origin) return callback(null, true)
+
+    if (allowedOrigins.includes(origin)) {
       callback(null, true)
     } else {
-      callback(new Error('Not allowed by CORS'))
+      console.log('Blocked by CORS:', origin) // you'll see this in Render logs
+      callback(new Error(`CORS blocked: ${origin}`))
     }
   },
   credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
 }))
+
+// handle preflight OPTIONS requests explicitly
+app.options('*', cors())
+
 app.use(express.json())          
 app.use(cookieParser())  
 
