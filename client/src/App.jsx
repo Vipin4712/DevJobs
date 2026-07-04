@@ -11,7 +11,7 @@ import PostJob from './pages/PostJob.jsx'
 import RecruiterDashboard from './pages/RecruiterDashboard.jsx'
 import MyApplications from './pages/MyApplications.jsx'
 import JobApplicants from './pages/JobApplicants.jsx'
-import SeekerProfile from './pages/SeekerProfile.jsx'
+import SeekerProfile from './pages/SeekerProfile.jsx' 
 import MatchScore from './pages/MatchScore.jsx'
 import AdminPanel from './pages/AdminPanel.jsx'
 
@@ -24,7 +24,22 @@ function App() {
 
   return (
     <>
-      <Toaster position="top-center" />
+      <Toaster
+        position="top-center"
+        toastOptions={{
+          duration: 3000,
+          style: {
+            fontSize: '14px',
+            borderRadius: '8px',
+          },
+          success: {
+            iconTheme: { primary: '#16a34a', secondary: '#fff' },
+          },
+          error: {
+            iconTheme: { primary: '#dc2626', secondary: '#fff' },
+          },
+        }}
+      />
       <Navbar />
       <Routes>
         <Route path="/login" element={<Login />} />

@@ -5,6 +5,7 @@ import { setJobs, setLoading, setFilters } from '../store/jobSlice.js'
 import JobCard from '../components/JobCard.jsx'
 import FilterSidebar from '../components/FilterSidebar.jsx'
 import RecommendedJobs from '../components/RecommendedJobs.jsx'
+import { JobGridSkeleton } from '../components/Skeleton.jsx'
 
 function BrowseJobs() {
   const dispatch = useDispatch()
@@ -48,7 +49,7 @@ function BrowseJobs() {
 
         <div className="md:col-span-3">
           {loading ? (
-            <p className="text-gray-500 text-sm">Loading jobs...</p>
+            <JobGridSkeleton count={6} />
           ) : jobs.length === 0 ? (
             <div className="text-center py-16 text-gray-500">
               <p>No jobs match your filters.</p>

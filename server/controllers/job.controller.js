@@ -1,6 +1,5 @@
 import Job from '../models/job.model.js'
 
-// ─── CREATE JOB (recruiter only) ───────────────────────
 export const createJob = async (req, res) => {
   try {
     const { title, company, description, skills, location, type, salaryMin, salaryMax } = req.body
@@ -27,7 +26,7 @@ export const createJob = async (req, res) => {
   }
 }
 
-// ─── GET ALL JOBS (public, with filters + pagination) ──
+
 export const getJobs = async (req, res) => {
   try {
     const { skills, location, type, minSalary, page = 1, limit = 10, search } = req.query
@@ -40,7 +39,7 @@ export const getJobs = async (req, res) => {
     }
 
     if (location) {
-      filter.location = { $regex: location, $options: 'i' }  // case-insensitive partial match
+      filter.location = { $regex: location, $options: 'i' }
     }
 
     if (type) {
@@ -57,10 +56,17 @@ export const getJobs = async (req, res) => {
 
     const skip = (Number(page) - 1) * Number(limit)
 
+    // when searching by text, sort by relevance score; otherwise sort by newest
+    const sortStage = search
+      ? { score: { $meta: 'textScore' } }
+      : { createdAt: -1 }
+
+    const projectStage = search ? { score: { $meta: 'textScore' } } : {}
+
     const [jobs, total] = await Promise.all([
-      Job.find(filter)
+      Job.find(filter, projectStage)
         .populate('postedBy', 'name')
-        .sort({ createdAt: -1 })
+        .sort(sortStage)
         .skip(skip)
         .limit(Number(limit)),
       Job.countDocuments(filter),
@@ -77,7 +83,7 @@ export const getJobs = async (req, res) => {
   }
 }
 
-// ─── GET SINGLE JOB ─────────────────────────────────────
+
 export const getJobById = async (req, res) => {
   try {
     const job = await Job.findById(req.params.id).populate('postedBy', 'name email')
@@ -92,7 +98,7 @@ export const getJobById = async (req, res) => {
   }
 }
 
-// ─── GET JOBS POSTED BY LOGGED-IN RECRUITER ────────────
+
 export const getMyJobs = async (req, res) => {
   try {
     const jobs = await Job.find({ postedBy: req.user._id }).sort({ createdAt: -1 })
@@ -102,7 +108,7 @@ export const getMyJobs = async (req, res) => {
   }
 }
 
-// ─── UPDATE JOB (only owner recruiter) ─────────────────
+
 export const updateJob = async (req, res) => {
   try {
     const job = await Job.findById(req.params.id)
@@ -130,7 +136,7 @@ export const updateJob = async (req, res) => {
   }
 }
 
-// ─── DELETE JOB (only owner recruiter) ─────────────────
+
 export const deleteJob = async (req, res) => {
   try {
     const job = await Job.findById(req.params.id)

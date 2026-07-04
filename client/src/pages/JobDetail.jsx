@@ -88,7 +88,7 @@ function JobDetail() {
         </div>
 
         {isAuthenticated && user.role === 'seeker' && (
-          <div className="mt-6 pt-6 border-t border-gray-100 flex gap-3">
+          <div className="mt-6 pt-6 border-t border-gray-100 flex flex-col sm:flex-row gap-3">
             {hasApplied ? (
               <span className="text-sm px-5 py-2.5 rounded-md bg-green-50 text-green-700 border border-green-200">
                 ✓ Application submitted
